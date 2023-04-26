@@ -1,5 +1,5 @@
 
-import java.sql.*;
+/*import java.sql.*;
 import java.util.Scanner;
 
 public class main {
@@ -37,3 +37,5 @@ public class main {
         }
     }
 }
+
+ */
