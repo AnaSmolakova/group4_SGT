@@ -1,6 +1,4 @@
-public class Viktorija {
-    public static void main(String[] args) {
+//public class Viktorija {
+    //public static void main(String[] args) {
         //hello
 
-    }
-}
