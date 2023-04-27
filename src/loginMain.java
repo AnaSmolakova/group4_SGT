@@ -17,6 +17,7 @@ public class loginMain {
         System.out.println("Please, enter the password. ");
         testUser.setPassword(scanner.nextLine());
 
+
         int userId = db.checkLogin(testUser.getUsername(), testUser.getPassword());
         if (userId > 0) {
             System.out.println("You have logged in successfully!");
