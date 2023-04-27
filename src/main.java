@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class main {
     public static void main(String[] args) {
         String dbURL = "https://github.com/AnaSmolakova/group4_SGT/tree/main/SQL";
-        String username = "???";
-        String password = "???";
+        String username = "root";
+        String password = "1111";
         Scanner scanner = new Scanner(System.in);
         char again = 'y';
 
@@ -15,8 +15,7 @@ public class main {
             System.out.println("Connected to database!");
 
             while (again == 'y') {
-                System.out.println("Welcome to the TEMPERAMENT TEST code. Would you like to take a TEMPERAMENT TESTS?"
-                        "Please choose which version of test you would like to take: " +
+                System.out.println("Welcome to the TEMPERAMENT TEST code. Would you like to take a TEMPERAMENT TESTS?"                         "Please choose which version of test you would like to take: " +
                                 "short test (S) or full test (F)");
                 System.out.println("s - demo version - short test");
                 System.out.println("f - full test");
@@ -24,8 +23,22 @@ public class main {
 
                 char action = scanner.nextLine().charAt(0);
 
-            } else{
-                System.out.println("Invalid input");
+
+                if (action == 'i'){
+
+                    System.out.println("Enter username");
+                    String newUserName = scanner.nextLine();
+
+                    System.out.println("Enter password");
+                    String newPassword = scanner.nextLine();
+
+                    System.out.println("Enter full name");
+                    String newFullName = scanner.nextLine();
+
+                    System.out.println("Enter your email");
+                    String newEmail = scanner.nextLine();
+
+
             }
 
 
