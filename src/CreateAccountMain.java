@@ -63,7 +63,6 @@ public class CreateAccountMain {
         } while (!matcher.matches());
         System.out.println("Input accepted.");
 
-
         System.out.println("Please, enter Your email.");
         String newEmail = scanner.nextLine();
         if (Pattern.matches("^[A-Za-z0-9+_.-]+@(.+)$", newEmail)) {
