@@ -1,6 +1,6 @@
 
 
-//Login method
+/*//Login method
 
 public static void userChoice(){
         System.out.println("What do you want to do?");
@@ -35,7 +35,7 @@ public static void userChoice(){
 
         // optionChoice == '4' = Logout method
 
-
+*/
 
 
 
