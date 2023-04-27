@@ -9,6 +9,7 @@ public class loginMain {
 
     public static void main(String[] args) {
 
+
         Scanner scanner = new Scanner(System.in);
         loginInfo testUser = new loginInfo();
         System.out.println("Please, enter the user name. ");
