@@ -8,6 +8,7 @@ PRIMARY KEY (questionID)
 INSERT INTO psychologytest (section, question)
 VALUES ('3', 'I am detailed');
 
+<<<<<<< HEAD
 INSERT INTO psychologytest (section, question)
 VALUES ('3', 'I am consistent');
 
@@ -126,3 +127,13 @@ VALUES ('4', 'I am tolerant');
 
 INSERT INTO psychologytest (section, question)
 VALUES ('4', 'I am peace maker');
+=======
+CREATE TABLE results (
+loginInfo int NOT NULL REFERENCES usersName(login),
+questionsInfo int NOT NULL REFERENCES question(qustions),
+answerUser int NOT NULL REFERENCES answer(questions),
+answerUser int NOT NULL,
+PRIMARY KEY (studentID, teacherID, subjectID)
+);
+
+>>>>>>> f4364eb1bea303d98c78073a3b17c6f9774b7b9a

@@ -3,6 +3,7 @@ public class loginInfo {
     private String userName;
     private String password;
     private String fullName;
+
     private String email;
 
     public void setUsername(String userName) {
