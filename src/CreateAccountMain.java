@@ -72,31 +72,4 @@ public class CreateAccountMain {
             System.out.println("Invalid input. Please try again. ");
         }
     }
-    public class choice {
-        public static void main(String[] args) {
-            String response;
-            Scanner scanner;
-            do {
-                System.out.println("Would you like to log in or create an account? (login/create)");
-                scanner = new Scanner(System.in);
-                response = scanner.nextLine();
-                if (response.equalsIgnoreCase("login")) {
-                    login();
-                    break;
-                } else if (response.equalsIgnoreCase("create")) {
-                    createAccount();
-                    break;
-                } else {
-                    System.out.println("Invalid response. Please enter 'login' or 'create'.");
-                }
-            } while (true);
-            scanner.close();
-        }
-        private static void login() {
-            System.out.println("You have successfully logged in!");
-        }
-        private static void createAccount() {
-            System.out.println("Your account has been created!");
-        }
-    }
 }
