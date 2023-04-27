@@ -15,3 +15,4 @@ answerUser int NOT NULL REFERENCES answer(questions),
 answerUser int NOT NULL,
 PRIMARY KEY (studentID, teacherID, subjectID)
 );
+
