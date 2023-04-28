@@ -1,7 +1,6 @@
-import javax.xml.crypto.Data;
+/*import javax.xml.crypto.Data;
 import java.awt.image.DataBuffer;
 import java.util.Scanner;
-
 public class loginMain {
 
 
@@ -27,3 +26,4 @@ public class loginMain {
         }
     }
 }
+ */
