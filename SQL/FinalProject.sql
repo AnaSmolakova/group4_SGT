@@ -1,14 +1,159 @@
+CREATE TABLE loginInfo (
+userID int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+password varchar(45) NOT NULL,
+fullName varchar(100) NOT NULL,
+username varchar(100) NOT NULL,
+email varchar(45)
+);
+DROP TABLE loginInfo;
+
 CREATE TABLE psychologytest (
 questionID int (45) NOT NULL auto_increment,
-section int (45) NOT NULL,
+section int (45)  NOT NULL,
 question varchar (400) NOT NULL,
 PRIMARY KEY (questionID)
 );
 
+DROP TABLE psychologytest;
+
+CREATE TABLE result (
+userIDInfo int NOT NULL REFERENCES loginInfo(userID),
+questionIDInfo int NOT NULL REFERENCES psychologytest(questionID),
+answer int NOT NULL,
+PRIMARY KEY (userIDInfo, questionIDInfo)
+);
+
+DROP TABLE result;
+
+INSERT INTO loginInfo (password, fullName, email, username) VALUES ('1','Test','test@email.com', 'test');
+
+SELECT * FROM loginInfo;
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am persistent');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am confident');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am firm');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I enjoy challenges');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am problem solver');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am bold');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am driven');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am strong-willed');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am self-reliant');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am authoritative');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I like to take charge');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am determined');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am enterprising');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am competitive');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am productive');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am purposeful');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am adventurous');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am independent');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am controlling');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('1', 'I am goal oriented');
+
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am enthusiastic');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am visionary');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am energetic');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am a promoter');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am sociable');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am fun-loving');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am spontaneous');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am creative');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am optimistic');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I laught a lot');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am a risk taker');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am motivated');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am chatty');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am friendly');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I Enjoy being popular');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I like variety');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I enjoy change');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am group oriented');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am an initiator');
+
+INSERT INTO psychologytest (section, question) 
+VALUES ('2', 'I am inspirational');
+
+
 INSERT INTO psychologytest (section, question)
 VALUES ('3', 'I am detailed');
 
-<<<<<<< HEAD
 INSERT INTO psychologytest (section, question)
 VALUES ('3', 'I am consistent');
 
@@ -65,7 +210,6 @@ VALUES ('3', 'I am organised');
 
 INSERT INTO psychologytest (section, question)
 VALUES ('3', 'I am deliberate');
-
 
 
 INSERT INTO psychologytest (section, question)
@@ -127,13 +271,9 @@ VALUES ('4', 'I am tolerant');
 
 INSERT INTO psychologytest (section, question)
 VALUES ('4', 'I am peace maker');
-=======
-CREATE TABLE results (
-loginInfo int NOT NULL REFERENCES usersName(login),
-questionsInfo int NOT NULL REFERENCES question(qustions),
-answerUser int NOT NULL REFERENCES answer(questions),
-answerUser int NOT NULL,
-PRIMARY KEY (studentID, teacherID, subjectID)
-);
 
->>>>>>> f4364eb1bea303d98c78073a3b17c6f9774b7b9a
+SELECT * FROM psychologytest;
+
+INSERT INTO result (userIDInfo, questionIDInfo, answer) VALUES (1, 1, 1);
+
+SELECT * FROM result;
