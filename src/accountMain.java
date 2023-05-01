@@ -1,95 +1,178 @@
+import com.sun.jdi.connect.spi.Connection;
+
+import java.sql.DriverManager;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class accountMain {
-        public static void main(String[] args) {
+public class DataBase {
+    static String dbURL = "jdbc:mysql://localhost:3306/java35";
+    static String user = "root";
+    static String password = "0705";
 
-            Scanner scanner = new Scanner(System.in);
-            String response;
-            do {
-                System.out.println("Would you like to log in or create an account? (login/create)");
-                response = scanner.nextLine();
-                if (response.equalsIgnoreCase("login")) {
-                    login();
-                    break;
-                } else if (response.equalsIgnoreCase("create")) {
-                    createAccount();
-                    break;
-                } else {
-                    System.out.println("Invalid response. Please enter 'login' or 'create'.");
-                }
-            } while (true);
-            scanner.close();
-        }
-        private static void createAccount() {
-            CreateAccountMain account = new CreateAccountMain();
-            account.main(null);
-        }
-        public static void login() {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Please enter your username:");
-            String username = scanner.nextLine();
-            System.out.println("Please enter your password:");
-            String password = scanner.nextLine();
 
-            DataBase db = new DataBase();
-            int userId = db.checkLogin(username, password);
-            if (userId > 0) {
-                System.out.println("Login successful. Welcome, user " + userId + "!");
+    public int checkLogin(String userName, String pswd){
+
+        try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {
+            String sql = "SELECT * FROM loginInfo WHERE username ='" + userName + "' and password ='" + pswd + "'";
+
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            if (resultSet.next()) {
+                //returns current Users ID Nr.
+                return resultSet.getInt(1);
             } else {
-                System.out.println("Login failed. Please check your username and password and try again.");
+                return 0;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        static class CreateAccountMain {
-            public static void main(String[] args) {
-                Scanner scanner = new Scanner(System.in);
-                String expectedUserName = "[A-Z]{3}[1-9]{3,20}";
-                Pattern UserNamepattern = Pattern.compile(expectedUserName);
-                Matcher matcher;
-                do {
-                    System.out.println("Please, create new user name, which consists of 3 uppercase letter and at least 3 numbers. ");
-                    String enteredUserName = scanner.nextLine();
-                    matcher = UserNamepattern.matcher(enteredUserName);
-                    if (!matcher.matches()) {
-                        System.out.println("Invalid input. Please try again.");
-                    }
-                } while (!matcher.matches());
-                System.out.println("Input accepted.");
-                String expectedPassword = "[1-9]{4,20}";
-                Pattern Passwordpattern = Pattern.compile(expectedPassword);
-                do {
-                    System.out.println("Please, create new password, which consists of 4 numbers.");
-                    String enteredPassword = scanner.nextLine();
-                    matcher = Passwordpattern.matcher(enteredPassword);
-                    if (!matcher.matches()) {
-                        System.out.println("Invalid input. Please try again.");
-                    }
-                } while (!matcher.matches());
-                System.out.println("Input accepted.");
-                String expectedFullName = "[a-zA-Z]{1,20}+( )+[a-zA-Z]{1,20}";
-                Pattern FullNamepattern = Pattern.compile(expectedFullName);
-                do {
-                    System.out.println("Please, enter Your full name.");
-                    String enteredFullName = scanner.nextLine();
-                    matcher = FullNamepattern.matcher(enteredFullName);
-                    if (!matcher.matches()) {
-                        System.out.println("Invalid input. Please try again. ");
-                    }
-                } while (!matcher.matches());
-                System.out.println("Input accepted.");
-                String expectedEmail = "^[A-Za-z0-9+_.-]+@(.+)$";
-                Pattern Emailpattern = Pattern.compile(expectedEmail);
-                do {
-                    System.out.println("Please, enter Your email.");
-                    String enteredEmail = scanner.nextLine();
-                    matcher = Emailpattern.matcher(enteredEmail);
-                    if (!matcher.matches()) {
-                        System.out.println("Your inputted email is not valid, please try one more time. ");
-                    }
-                } while (!matcher.matches());
-                System.out.println(" Your account has been created! ");
-            }
-        }
+        return 0;
     }
+    public int createUser(String userName, String pswd, String fullName, String email){
+        try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {
+            String sql = "INSERT INTO logininfo (username, password, fullName, email) VALUES (?,?,?,?);";
+
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, userName);
+            preparedStatement.setString(2, pswd);
+            preparedStatement.setString(3, fullName);
+            preparedStatement.setString(4, email);
+            preparedStatement.executeUpdate();
+
+
+            //to get the ID of the current user
+            String sqlID = "SELECT * FROM logininfo WHERE username ='" + userName + "' and password ='" + pswd + "'";
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlID);
+
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1);//returns current users ID Nr.
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  0;
+    }
+
+    public void readQuestions(String username){
+        int section1 = 0;
+        int section2 = 0;
+        int section3 = 0;
+        int section4 = 0;
+        Scanner scanner = new Scanner(System.in);
+        int input;
+        try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {
+            String sql = "SELECT * FROM psychologytest";
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString(3));
+                input = scanner.nextInt();
+                if(resultSet.getInt(2)==1){
+                    section1 += input;
+                }else if(resultSet.getInt(2)==2){
+                    section2 += input;
+                }else if(resultSet.getInt(2)==3){
+                    section3 += input;
+                } else if (resultSet.getInt(2)==4) {
+                    section4 += input;
+                }
+            }
+
+            if(section1>section2 && section1>section3 && section1 > section4){
+                System.out.println("Section 1");
+            } else if (section2>section1 && section2>section3 && section2 > section4) {
+                System.out.println("Section 2");
+            } else if (section3>section1 && section3>section2 && section3 > section4) {
+                System.out.println("Section 3");
+            } else if (section4>section1 && section4>section2 && section4 > section3) {
+                System.out.println("Section 4");
+            }
+
+
+
+
+        }catch (Exception e){
+
+        }
+
+
+    }
+
+
+ /*   public static int checklogin() throws SQLException {
+        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
+            // Prompt the user to enter their login information
+            System.out.println("Please enter your login information:");
+
+            // Prompt for the username and password
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Username: ");
+            String usernameInput = scanner.nextLine();
+            System.out.print("Password: ");
+            String passwordInput = scanner.nextLine();
+
+            // Check if the user exists in the database
+            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM loginInfo WHERE username = ? AND password = ?")) {
+                stmt.setString(1, usernameInput);
+                stmt.setString(2, passwordInput);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        // User exists, get their userID
+                        userID = rs.getInt("userID");
+                    } else {
+                        // User does not exist, create a new one
+                        try (PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO loginInfo (username, password) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+                            stmt2.setString(1, usernameInput);
+                            stmt2.setString(2, passwordInput);
+
+                            stmt2.executeUpdate();
+
+                            try (ResultSet generatedKeys = stmt2.getGeneratedKeys()) {
+                                if (generatedKeys.next()) {
+                                    userID = generatedKeys.getInt(1);
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (Exception e) {
+        }
+
+    }*/
+
+/*    public static void getQuestion() throws SQLException{
+
+        // Get the questions from the database and prompt the user to answer them
+        try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM psychologytest ORDER BY questionID")) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int questionID = rs.getInt("questionID");
+                    String question = rs.getString("question");
+
+                    System.out.print(question + " (1 = disagree, 2 = somewhat disagree, 3 = neutral, 4 = somewhat agree, 5 = agree): ");
+                    int answer = scanner.nextInt();
+
+                    try (PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO result (userIDInfo, questionIDInfo, answer) VALUES (?, ?, ?)")) {
+                        stmt2.setInt(1, userID);
+                        stmt2.setInt(2, questionID);
+                        stmt2.setInt(3, answer);
+
+                        stmt2.executeUpdate();
+                    }
+                }
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    }*/
+}
 
