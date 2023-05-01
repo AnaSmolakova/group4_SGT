@@ -95,16 +95,30 @@ public class DataBase {
             if (section1 > section2 && section1 > section3 && section1 > section4) {
                 System.out.println("Choleric Temperament");
             } else if (section2 > section1 && section2 > section3 && section2 > section4) {
-                System.out.println("Sanguine Temperament");
+                System.out.println("Your temperament is sanguine");
             } else if (section3 > section1 && section3 > section2 && section3 > section4) {
-                System.out.println("Melancholic Temperament");
+                System.out.println("Your temperament is melancholic");
             } else if (section4 > section1 && section4 > section2 && section4 > section3) {
-                System.out.println("Phlegmatic Temperament");
+                System.out.println("Your temperament is phlegmatic");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    //INSERT user info in dataBase
+    /*public void insertUserInfo(int userID, String finalResult, Date completionDate) {
+        try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {
+            String sql = "INSERT INTO testResult (userIDInfo, result, date) VALUES (?, ?, ?);";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, userID);
+            statement.setString(2, finalResult);
+            statement.setDate(3, completionDate);
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }*/
 
     /*public static int checklogin() throws SQLException {
         try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {
