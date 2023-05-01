@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DataBase {
@@ -55,7 +56,7 @@ public class DataBase {
         return  0;
     }
 
-    public void readQuestions(String username){
+    public void readQuestions(String username) {
         int section1 = 0;
         int section2 = 0;
         int section3 = 0;
@@ -68,36 +69,41 @@ public class DataBase {
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 System.out.println(resultSet.getString(3));
-                input = scanner.nextInt();
-                if(resultSet.getInt(2)==1){
+                while (true) {
+                    try {
+                        input = scanner.nextInt();
+                        if (input < 1 || input > 5) {
+                            System.out.println("Invalid input. Please enter a number between 1 and 5.");
+                        } else {
+                            break;
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid input. Please enter a number between 1 and 5.");
+                        scanner.nextLine(); // clear the input buffer
+                    }
+                }
+                if (resultSet.getInt(2) == 1) {
                     section1 += input;
-                }else if(resultSet.getInt(2)==2){
+                } else if (resultSet.getInt(2) == 2) {
                     section2 += input;
-                }else if(resultSet.getInt(2)==3){
+                } else if (resultSet.getInt(2) == 3) {
                     section3 += input;
-                } else if (resultSet.getInt(2)==4) {
+                } else if (resultSet.getInt(2) == 4) {
                     section4 += input;
                 }
             }
-
-            if(section1>section2 && section1>section3 && section1 > section4){
+            if (section1 > section2 && section1 > section3 && section1 > section4) {
                 System.out.println("Choleric Temperament");
-            } else if (section2>section1 && section2>section3 && section2 > section4) {
+            } else if (section2 > section1 && section2 > section3 && section2 > section4) {
                 System.out.println("Sanguine Temperament");
-            } else if (section3>section1 && section3>section2 && section3 > section4) {
+            } else if (section3 > section1 && section3 > section2 && section3 > section4) {
                 System.out.println("Melancholic Temperament");
-            } else if (section4>section1 && section4>section2 && section4 > section3) {
+            } else if (section4 > section1 && section4 > section2 && section4 > section3) {
                 System.out.println("Phlegmatic Temperament");
             }
-
-
-
-
-        }catch (Exception e){
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-
     }
 
     /*public static int checklogin() throws SQLException {
