@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -12,7 +13,6 @@ public class DataBase {
 
         try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {
             String sql = "SELECT * FROM loginInfo WHERE username ='" + userName + "' and password ='" + pswd + "'";
-
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
 
@@ -103,22 +103,36 @@ public class DataBase {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            LocalDate date = LocalDate.now();
+
+            // Prepare the SQL statement to insert the test result
+
         }
     }
-    //INSERT user info in dataBase
-    /*public void insertUserInfo(int userID, String finalResult, Date completionDate) {
+
+
+    public void saveTestResult(int userID, int questionID) {
         try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {
-            String sql = "INSERT INTO testResult (userIDInfo, result, date) VALUES (?, ?, ?);";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, userID);
-            statement.setString(2, finalResult);
-            statement.setDate(3, completionDate);
-            statement.executeUpdate();
-            statement.close();
+            // Get the current date
+            LocalDate date = LocalDate.now();
+
+            // Prepare the SQL statement to insert the test result
+            String sql = "INSERT INTO testResult WHERE userIDInfo =' " + userID + " ' questionIDInfo =' " + questionID + " ' and testDate ='" + date;
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userID);
+            pstmt.setInt(2, questionID);
+            pstmt.setObject(3, date);
+
+            // Execute the SQL statement
+            pstmt.executeUpdate();
+
+            System.out.println("Test result saved successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+    }
+
 
     /*public static int checklogin() throws SQLException {
         try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {

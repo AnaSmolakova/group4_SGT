@@ -5,27 +5,30 @@ fullName varchar(100) NOT NULL,
 username varchar(100) NOT NULL,
 email varchar(45)
 );
+
 DROP TABLE loginInfo;
 
 CREATE TABLE psychologytest (
-questionID int (45) NOT NULL auto_increment,
-section int (45)  NOT NULL,
+questionID int NOT NULL auto_increment,
+section int NOT NULL,
 question varchar (400) NOT NULL,
 PRIMARY KEY (questionID)
 );
 
 DROP TABLE psychologytest;
 
-CREATE TABLE result (
-userIDInfo int NOT NULL REFERENCES loginInfo(userID),
-questionIDInfo int NOT NULL REFERENCES psychologytest(questionID),
-answer int NOT NULL,
-PRIMARY KEY (userIDInfo, questionIDInfo)
+CREATE TABLE testResult (
+userIDInfo int NOT NULL,
+questionIDInfo int NOT NULL,
+date DATE NOT NULL,
+FOREIGN KEY (userIDInfo) REFERENCES loginInfo(userID),
+FOREIGN KEY (questionIDInfo) REFERENCES psychologytest(questionID)
 );
 
-DROP TABLE result;
+DROP TABLE testResult;
 
-INSERT INTO loginInfo (password, fullName, email, username) VALUES ('1','Test','test@email.com', 'test');
+INSERT INTO loginInfo (password, fullName, email, username) 
+VALUES ('1','Test','test@email.com', 'test');
 
 SELECT * FROM loginInfo;
 
@@ -274,6 +277,7 @@ VALUES ('4', 'I am peace maker');
 
 SELECT * FROM psychologytest;
 
-INSERT INTO result (userIDInfo, questionIDInfo, answer) VALUES (1, 1, 1);
+INSERT INTO testResult (userIDInfo, questionIDInfo, date)
+VALUES (1, 1, '2023-05-01');
 
-SELECT * FROM result;
+SELECT * FROM testResult;
