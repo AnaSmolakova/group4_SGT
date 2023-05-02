@@ -22,7 +22,7 @@ To be able to fill out the test, the user must create an account.
 User will be able to fill out the test directly after creating an account or after login.
 
 Team members:
-Anastasija Smolakova
-Marina Dzjubenko
-Viktorija Lietuvnike
+Anastasija Smolakova,
+Marina Dzjubenko,
+Viktorija Lietuvnike,
 Baiba Plavina
