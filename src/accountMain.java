@@ -109,7 +109,16 @@ public class accountMain {
 
         int insertSuccessfull = db.createUser(enteredUserName, enteredPassword, enteredFullName, enteredEmail);
         if (insertSuccessfull > 0) {
-            System.out.println(" Your account has been created! ");
+            System.out.println("Your account has been created! ");
+
+            // log in the newly created user
+            int userId = db.checkLogin(enteredUserName, enteredPassword);
+            if (userId > 0) {
+                System.out.println("Login successful. Welcome, user " + userId + "!");
+                db.readQuestions(enteredUserName);
+            } else {
+                System.out.println("Login failed. Please check your username and password and try again.");
+            }
         } else {
             System.out.println("Creation failed.");
         }
