@@ -17,15 +17,16 @@ PRIMARY KEY (questionID)
 
 DROP TABLE psychologytest;
 
-CREATE TABLE testResult (
-userIDInfo int NOT NULL,
-questionIDInfo int NOT NULL,
-date DATE NOT NULL,
-FOREIGN KEY (userIDInfo) REFERENCES loginInfo(userID),
-FOREIGN KEY (questionIDInfo) REFERENCES psychologytest(questionID)
+CREATE TABLE testResults (
+    userID INT NOT NULL,
+    choleric INT NOT NULL,
+    sanguine INT NOT NULL,
+    melancholic INT NOT NULL,
+    phlegmatic INT NOT NULL,
+    FOREIGN KEY (userID) REFERENCES loginInfo(userID)
 );
 
-DROP TABLE testResult;
+DROP TABLE testResults;
 
 INSERT INTO loginInfo (password, fullName, email, username) 
 VALUES ('1','Test','test@email.com', 'test');
@@ -136,7 +137,7 @@ INSERT INTO psychologytest (section, question)
 VALUES ('2', 'I am friendly');
 
 INSERT INTO psychologytest (section, question) 
-VALUES ('2', 'I Enjoy being popular');
+VALUES ('2', 'I enjoy being popular');
 
 INSERT INTO psychologytest (section, question) 
 VALUES ('2', 'I like variety');
@@ -173,7 +174,7 @@ INSERT INTO psychologytest (section, question)
 VALUES ('3', 'I am perfectionist');
 
 INSERT INTO psychologytest (section, question)
-VALUES ('3', 'I am enjoys instructions');
+VALUES ('3', 'I am enjoy instructions');
 
 INSERT INTO psychologytest (section, question)
 VALUES ('3', 'I am inquisitive');
@@ -225,10 +226,10 @@ INSERT INTO psychologytest (section, question)
 VALUES ('4', 'I am easy-going');
 
 INSERT INTO psychologytest (section, question)
-VALUES ('4', 'I am avoids confrontation');
+VALUES ('4', 'I avoid confrontation');
 
 INSERT INTO psychologytest (section, question)
-VALUES ('4', 'I am enjoys routine');
+VALUES ('4', 'I enjoy routine');
 
 INSERT INTO psychologytest (section, question)
 VALUES ('4', 'I am warm');
@@ -252,13 +253,13 @@ INSERT INTO psychologytest (section, question)
 VALUES ('4', 'I am well-balanced');
 
 INSERT INTO psychologytest (section, question)
-VALUES ('4', 'I am gives in easily');
+VALUES ('4', 'I give in easily');
 
 INSERT INTO psychologytest (section, question)
 VALUES ('4', 'I am indecisive');
 
 INSERT INTO psychologytest (section, question)
-VALUES ('4', 'I am dislikes changes');
+VALUES ('4', 'I dislike changes');
 
 INSERT INTO psychologytest (section, question)
 VALUES ('4', 'I am dry humor');
@@ -277,7 +278,7 @@ VALUES ('4', 'I am peace maker');
 
 SELECT * FROM psychologytest;
 
-INSERT INTO testResult (userIDInfo, questionIDInfo, date)
-VALUES (1, 1, '2023-05-01');
+INSERT INTO testResults (userID, choleric, sanguine, melancholic, phlegmatic)
+VALUES (1, 20, 15, 10, 5);
 
-SELECT * FROM testResult;
+SELECT * FROM testResults;
