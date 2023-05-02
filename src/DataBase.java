@@ -57,12 +57,12 @@ public class DataBase {
     }
 
     public void readQuestions(String username) {
-        System.out.println(" Please evaluate yourself according to the following characteristics");
-        System.out.println("1 = “That is definitely NOT me”;+\n" +
-                "\'2 = “That is usually NOT me” +\n" +
-                "\'3= “That is usually me”;+\n" +
-                "\'4 = “That is mostly me”;\n" +
-                "\'5 = “That is mostly me.” \\n");
+        System.out.println("Please evaluate yourself in following statements according to these characteristics:");
+        System.out.println("1 = That is definitely NOT me");
+        System.out.println("2 = That is usually NOT me");
+        System.out.println("3 = That is usually me");
+        System.out.println("4 = That is mostly me");
+        System.out.println("5 = That is totally me");
         int section1 = 0;
         int section2 = 0;
         int section3 = 0;
@@ -135,28 +135,6 @@ public class DataBase {
         }
     }
 
-
-    public void saveTestResult(int userID, int questionID) {
-        try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {
-            // Get the current date
-            LocalDate date = LocalDate.now();
-
-            // Prepare the SQL statement to insert the test result
-            String sql = "INSERT INTO testResult WHERE userIDInfo =' " + userID + " ' questionIDInfo =' " + questionID + " ' and testDate ='" + date;
-
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, userID);
-            pstmt.setInt(2, questionID);
-            pstmt.setObject(3, date);
-
-            // Execute the SQL statement
-            pstmt.executeUpdate();
-
-            System.out.println("Test result saved successfully!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     /*public static int checklogin() throws SQLException {
