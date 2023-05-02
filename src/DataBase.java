@@ -1,14 +1,13 @@
 import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 public class DataBase {
     static String dbURL = "jdbc:mysql://localhost:3306/java35";
     static String user = "root";
-    static String password = "1111";
+    static String password = "0705";
 
 
-    public int checkLogin(String userName, String pswd){
+    public int checkLogin(String userName, String pswd) {
 
         try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {
             String sql = "SELECT * FROM loginInfo WHERE username ='" + userName + "' and password ='" + pswd + "'";
@@ -27,7 +26,8 @@ public class DataBase {
         }
         return 0;
     }
-    public int createUser(String userName, String pswd, String fullName, String email){
+
+    public int createUser(String userName, String pswd, String fullName, String email) {
         try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {
             String sql = "INSERT INTO logininfo (username, password, fullName, email) VALUES (?,?,?,?);";
 
@@ -53,7 +53,7 @@ public class DataBase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return  0;
+        return 0;
     }
 
     public void readQuestions(String username) {
@@ -92,6 +92,17 @@ public class DataBase {
                     section4 += input;
                 }
             }
+            //Insert the section scores into the "testResults" table for the user
+            String insertSql = "INSERT INTO testResults (userID, section1, section2, section3, section4) " +
+                    "VALUES ((SELECT userID FROM loginInfo WHERE username = ?), ?, ?, ?, ?)";
+            PreparedStatement insertStatement = conn.prepareStatement(insertSql);
+            insertStatement.setString(1, username);
+            insertStatement.setInt(2, section1);
+            insertStatement.setInt(3, section2);
+            insertStatement.setInt(4, section3);
+            insertStatement.setInt(5, section4);
+            insertStatement.executeUpdate();
+
             if (section1 > section2 && section1 > section3 && section1 > section4) {
                 System.out.println("Choleric Temperament");
             } else if (section2 > section1 && section2 > section3 && section2 > section4) {
@@ -104,91 +115,6 @@ public class DataBase {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
-    //INSERT user info in dataBase
-    /*public void insertUserInfo(int userID, String finalResult, Date completionDate) {
-        try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {
-            String sql = "INSERT INTO testResult (userIDInfo, result, date) VALUES (?, ?, ?);";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, userID);
-            statement.setString(2, finalResult);
-            statement.setDate(3, completionDate);
-            statement.executeUpdate();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    /*public static int checklogin() throws SQLException {
-        try (Connection conn = DriverManager.getConnection(dbURL, user, password)) {
-            // Prompt the user to enter their login information
-            System.out.println("Please enter your login information:");
-
-            // Prompt for the username and password
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Username: ");
-            String usernameInput = scanner.nextLine();
-            System.out.print("Password: ");
-            String passwordInput = scanner.nextLine();
-
-            // Check if the user exists in the database
-            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM loginInfo WHERE username = ? AND password = ?")) {
-                stmt.setString(1, usernameInput);
-                stmt.setString(2, passwordInput);
-
-                try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        // User exists, get their userID
-                        userID = rs.getInt("userID");
-                    } else {
-                        // User does not exist, create a new one
-                        try (PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO loginInfo (username, password) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
-                            stmt2.setString(1, usernameInput);
-                            stmt2.setString(2, passwordInput);
-
-                            stmt2.executeUpdate();
-
-                            try (ResultSet generatedKeys = stmt2.getGeneratedKeys()) {
-                                if (generatedKeys.next()) {
-                                    userID = generatedKeys.getInt(1);
-                                }
-                            }
-                        }
-                    }
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (Exception e) {
-        }
-
-    }*/
-
- /*public static void getQuestion() throws SQLException{
-
-        // Get the questions from the database and prompt the user to answer them
-        try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM psychologytest ORDER BY questionID")) {
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    int questionID = rs.getInt("questionID");
-                    String question = rs.getString("question");
-
-                    System.out.print(question + " (1 = disagree, 2 = somewhat disagree, 3 = neutral, 4 = somewhat agree, 5 = agree): ");
-                    int answer = scanner.nextInt();
-
-                    try (PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO result (userIDInfo, questionIDInfo, answer) VALUES (?, ?, ?)")) {
-                        stmt2.setInt(1, userID);
-                        stmt2.setInt(2, questionID);
-                        stmt2.setInt(3, answer);
-
-                        stmt2.executeUpdate();
-                    }
-                }
-            }
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-    }*/
 }
