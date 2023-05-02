@@ -20,3 +20,9 @@ The project is based on temperament type calculation by personality temperament 
 The result is calculated based on the entered answers. The answer will be calculated by the program and based on the maximum number of points, it will be determined whether the user has a sanguine temperament, a choleric temperament, a melancholic temperament or a phlegmatic temperament.
 To be able to fill out the test, the user must create an account. 
 User will be able to fill out the test directly after creating an account or after login.
+
+Team members:
+Anastasija Smolakova
+Marina Dzjubenko
+Viktorija Lietuvnike
+Baiba Plavina
