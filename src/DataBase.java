@@ -57,6 +57,12 @@ public class DataBase {
     }
 
     public void readQuestions(String username) {
+        System.out.println(" Please evaluate yourself according to the following characteristics");
+        System.out.println("1 = “That is definitely NOT me”;+\n" +
+                "\'2 = “That is usually NOT me” +\n" +
+                "\'3= “That is usually me”;+\n" +
+                "\'4 = “That is mostly me”;\n" +
+                "\'5 = “That is mostly me.” \\n");
         int section1 = 0;
         int section2 = 0;
         int section3 = 0;
